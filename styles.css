@@ -1,0 +1,247 @@
+/* Reset mặc định */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Tiêu đề */
+.title {
+  font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #454545;
+  font-family: "Playfair Display", serif;
+}
+
+/* Trích dẫn */
+.quote {
+  font-size: 18px;
+  /* font-weight: bold; */
+  color: #555;
+  margin: 20px 0;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 30px;
+  font-family: "Didact Gothic", sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: url("bg1.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Container chính */
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  /* background-color: #ffffff; */
+  /* background: url("bg3.png"); */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  border-radius: 10px;
+}
+
+/* Hình ảnh thư mời */
+.invitation-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+/* Nút bấm */
+.buttons {
+  margin: 20px 0;
+}
+
+button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  margin-bottom: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 1px;
+  background-color: #46f3ed;
+  font-family: "Didact Gothic", sans-serif;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Sơ đồ ghế ngồi */
+#seatMap {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px;
+  position: relative;
+  /* background-color: #f7f7f7; */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ghế ngồi */
+#seatMap div {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #dbd6d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: #e3e3e3;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  cursor: pointer;
+  z-index: 0;
+}
+
+/* Ghế trống */
+#seatMap div.empty {
+  background-color: #e3e3e3;
+}
+
+/* Ghế đã đặt */
+#seatMap div.occupied {
+  background-color: #73d588; /* Màu xanh lá */
+  color: white;
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+/* Hover: Phóng to ghế */
+#seatMap div.occupied:hover {
+  transform: scale(2.5);
+}
+
+/* Tên rút gọn (2 chữ cuối) */
+#seatMap div.occupied::before {
+  position: relative;
+  content: attr(data-short-name);
+  z-index: -9999;
+}
+
+/* Hiển thị tên đầy đủ khi hover */
+#seatMap div.occupied::after {
+  content: attr(data-full-name);
+  display: none;
+  font-size: 6px;
+  background-color: #73d588;
+  color: white;
+  position: absolute;
+  z-index: 9999;
+  overflow-x: auto; 
+}
+
+#seatMap div.occupied:hover::after {
+  display: block;
+}
+
+#seatMap div.occupied:hover::before {
+  display: none;
+}
+
+/* Ghế đã đặt nhưng không tham dự */
+#seatMap div.decline {
+  background-color: #fed457; /* Màu vàng */
+  color: white;
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+/* Hover: Phóng to ghế */
+#seatMap div.decline:hover {
+  transform: scale(2.5);
+}
+
+/* Tên rút gọn (2 chữ cuối) */
+#seatMap div.decline::before {
+  position: relative;
+  content: attr(data-short-name);
+  z-index: -9999;
+}
+
+/* Hiển thị tên đầy đủ khi hover */
+#seatMap div.decline::after {
+  content: attr(data-full-name);
+  display: none;
+  font-size: 6px;
+  background-color: #fed457;
+  color: white;
+  position: absolute;
+  z-index: 9999;
+}
+
+#seatMap div.decline:hover::after {
+  display: block;
+}
+
+#seatMap div.decline:hover::before {
+  display: none;
+}
+
+/* Footer */
+footer {
+  margin-top: 20px;
+  margin-bottom: 90px;
+  padding: 20px;
+  /* background-color: #f8f9fa; */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-item {
+  flex: 1;
+}
+
+.footer-item h3 {
+  font-size: 21px;
+  font-family: "Playfair Display", serif;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.footer-item p {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Didact Gothic", sans-serif;
+  color: #555;
+}
+
+.footer-item a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer-item a:hover {
+  text-decoration: underline;
+}
+

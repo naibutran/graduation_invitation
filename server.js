@@ -18,18 +18,37 @@ app.get('/api/seats', (req, res) => {
 
 // API ghi nhận tham dự
 app.post('/api/attend', (req, res) => {
-  const { name } = req.body;
+//   const { name } = req.body;
+//   const { type } = req.body;
+//   console.log(type);
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
-        seatMap[row][col] = name;
-        return res.json({ success: true, row, col });
+        seatMap[row][col] = req.body;
+        return res.json({ success: true, row, col, type: "occupied" });
       }
     }
   }
   res.json({ success: false, message: "Hết chỗ ngồi!" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server đang chạy trên cổng ${PORT}`);
-});
+// Cập nhật API cho "Will not attend" (chỉ thay đổi màu ghế)
+app.post('/api/decline', (req, res) => {
+    // const { name } = req.body;
+    // const { type } = req.body;
+    // console.log(type);
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        if (!seatMap[row][col]) {
+            // console.log("riel");
+          seatMap[row][col] = req.body;
+          return res.json({ success: true, row, col, type: "decline" });
+        }
+      }
+    }
+    res.json({ success: false, message: "Hết chỗ ngồi!" });
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server đang chạy trên cổng ${PORT}`);
+  });  
