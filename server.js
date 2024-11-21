@@ -9,7 +9,7 @@ const port = process.env.PORT || 6969;
 let seatMap = Array(10).fill(null).map(() => Array(10).fill(null));
 
 const path = require('path')
-app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use(cors());
 app.use(bodyParser.json());
