@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 
 // Danh sách ghế ngồi
 let seatMap = Array(10).fill(null).map(() => Array(10).fill(null));
