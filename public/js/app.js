@@ -1,3 +1,4 @@
+// const apiUrl = "http://localhost:6969/api";
 const apiUrl = "https://hoanganh-graduation-invitation.onrender.com/api";
 
 const seatMapContainer = document.getElementById("seatMap");

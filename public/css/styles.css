@@ -82,7 +82,7 @@ button:hover {
   background-color: #0056b3;
   transform: scale(1.05);
 }
-
+ 
 /* Sơ đồ ghế ngồi */
 #seatMap {
   display: grid;
@@ -124,10 +124,11 @@ button:hover {
 
 /* Ghế đã đặt */
 #seatMap div.occupied {
-  background-color: #73d588; /* Màu xanh lá */
+  background-color: #46dfb1; /* Màu xanh lá */
   color: white;
   font-weight: bold;
   cursor: not-allowed;
+  z-index: 2;
 }
 
 /* Hover: Phóng to ghế */
@@ -139,7 +140,7 @@ button:hover {
 #seatMap div.occupied::before {
   position: relative;
   content: attr(data-short-name);
-  z-index: -9999;
+  /* z-index: -9999; */
 }
 
 /* Hiển thị tên đầy đủ khi hover */
@@ -147,15 +148,15 @@ button:hover {
   content: attr(data-full-name);
   display: none;
   font-size: 6px;
-  background-color: #73d588;
+  background-color: #46dfb1;
   color: white;
   position: absolute;
-  z-index: 9999;
   overflow-x: auto; 
 }
 
 #seatMap div.occupied:hover::after {
   display: block;
+  z-index: 9999;
 }
 
 #seatMap div.occupied:hover::before {
@@ -164,10 +165,11 @@ button:hover {
 
 /* Ghế đã đặt nhưng không tham dự */
 #seatMap div.decline {
-  background-color: #fed457; /* Màu vàng */
+  background-color: #f78c6a; /* Màu vàng */
   color: white;
   font-weight: bold;
   cursor: not-allowed;
+  z-index: 2;
 }
 
 /* Hover: Phóng to ghế */
@@ -179,7 +181,7 @@ button:hover {
 #seatMap div.decline::before {
   position: relative;
   content: attr(data-short-name);
-  z-index: -9999;
+  /* z-index: -9999; */
 }
 
 /* Hiển thị tên đầy đủ khi hover */
@@ -187,14 +189,14 @@ button:hover {
   content: attr(data-full-name);
   display: none;
   font-size: 6px;
-  background-color: #fed457;
+  background-color: #f78c6a;
   color: white;
   position: absolute;
-  z-index: 9999;
 }
 
 #seatMap div.decline:hover::after {
   display: block;
+  z-index: 9999;
 }
 
 #seatMap div.decline:hover::before {
