@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3030;
+const port = process.env.PORT || 6969;
 
 // Danh sách ghế ngồi
 let seatMap = Array(10).fill(null).map(() => Array(10).fill(null));
@@ -52,6 +52,6 @@ app.post('/api/decline', (req, res) => {
     res.json({ success: false, message: "Hết chỗ ngồi!" });
   });
 
-  app.listen(PORT, () => {
-    console.log(`Server đang chạy trên cổng ${PORT}`);
+  app.listen(port, () => {
+    console.log(`Server đang chạy trên cổng ${port}`);
   });  
