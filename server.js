@@ -8,6 +8,9 @@ const PORT = process.env.PORT || 3030;
 // Danh sách ghế ngồi
 let seatMap = Array(10).fill(null).map(() => Array(10).fill(null));
 
+const path = require('path')
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
 app.use(cors());
 app.use(bodyParser.json());
 

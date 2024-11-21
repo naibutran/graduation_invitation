@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3000/api";
+const apiUrl = "http://localhost:3030/api";
 
 const seatMapContainer = document.getElementById("seatMap");
 
