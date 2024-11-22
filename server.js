@@ -13,7 +13,7 @@ const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct0
 
 // Cấu hình kết nối PostgreSQL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || external_api,
+  connectionString: process.env.DATABASE_URL || internal_api,
   ssl: {
     rejectUnauthorized: false, // Cần thiết cho Render
   },
