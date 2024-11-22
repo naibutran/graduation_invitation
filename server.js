@@ -6,9 +6,12 @@ const { Pool } = require('pg');
 const app = express();
 const port = process.env.PORT || 6969;
 
+const internal_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov';
+const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov';
+
 // Cấu hình kết nối PostgreSQL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov',
+  connectionString: process.env.DATABASE_URL || internal_api,
   ssl: {
     rejectUnauthorized: false, // Cần thiết cho Render
   },
