@@ -1,55 +1,175 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+const { Pool } = require('pg');
 
 const app = express();
 const port = process.env.PORT || 6969;
-const SEAT_FILE_PATH = path.join(__dirname, 'seats.json');
+
+// Cấu hình kết nối PostgreSQL
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov',
+  ssl: {
+    rejectUnauthorized: false, // Cần thiết cho Render
+  },
+});
+
+// // Khởi tạo bảng nếu chưa tồn tại
+// (async () => {
+//   try {
+//     await pool.query(`
+//       CREATE TABLE IF NOT EXISTS seats (
+//         id SERIAL PRIMARY KEY,
+//         row INT NOT NULL,
+//         col INT NOT NULL,
+//         name TEXT,
+//         type TEXT
+//       )
+//     `);
+//     console.log('Database initialized.');
+//   } catch (err) {
+//     console.error('Error initializing database:', err);
+//   }
+// })();
+
+// function get_full(){
+//   pool.connect()
+//     .then(() => {
+//       console.log('Connected to PostgreSQL!');
+      
+//       // Truy vấn lấy tất cả dữ liệu từ bảng
+//       return pool.query('SELECT * FROM seats');
+//     })
+//     .then(res => {
+//       console.log('Data from the database:', res.rows);
+//       return res.rows;
+//       // pool.end(); // Đóng kết nối sau khi lấy xong dữ liệu
+//     })
+//     .catch(err => {
+//       console.error('Error connecting to the database', err.stack);
+//       // pool.end();
+//     });
+// }
+
+async function get_full() {
+  try {
+    const client = await pool.connect();  // Kết nối với cơ sở dữ liệu
+    console.log('Connected to PostgreSQL!');
+    
+    // Truy vấn lấy tất cả dữ liệu từ bảng seats
+    const res = await client.query('SELECT * FROM seats');
+    // console.log('Data from the database:', res.rows);
+    // console.log(res.rows[0].name);
+    console.log("Data is pulled");
+    
+    // Trả về kết quả là mảng dữ liệu từ bảng
+    return res.rows;
+  } catch (err) {
+    console.error('Error connecting to the database', err.stack);
+  }
+}
+
+function put_seat(name, type){
+  (async () => {
+    try {
+      // Dữ liệu mẫu để chèn
+      const row = 1;   // Ví dụ: hàng 1
+      const col = 1;   // Ví dụ: cột 1
+  
+      // Chèn dữ liệu vào bảng seats
+      const res = await pool.query(
+        'INSERT INTO seats (row, col, name, type) VALUES ($1, $2, $3, $4) RETURNING id',
+        [row, col, name, type]  // Truyền giá trị vào câu truy vấn
+      );
+  
+      // In ra id của mẫu dữ liệu đã thêm
+      console.log('New seat added with ID:', res.rows[0].id);
+  
+    } catch (err) {
+      console.error('Error inserting data:', err);
+    }
+  })();
+}
+
+function delete_data(){
+  pool.connect()
+  .then(() => {
+    console.log('Connected to PostgreSQL!');
+  });
+
+  (async () => {
+    try {
+      console.log('Truncating');
+      const res = await pool.query('TRUNCATE seats RESTART IDENTITY');
+  
+      console.log('All data in the "seats" table has been truncated and ID counter reset.');
+      
+    } catch (err) {
+      console.error('Error truncating data:', err);
+    }
+  })();
+}
+
+// put_seat('adu', 'decline');
+// delete_data();
+// put_seat('cc jz ba', 'decline');
+// get_full();
+
+// Gọi hàm và xử lý dữ liệu trả về (nếu cần)
+// const data = await get_full();  // Gọi hàm lấy dữ liệu từ PostgreSQL
+// console.log(typeof json(data));  // Trả về dữ liệu dưới dạng JSON
+
+
+app.use(cors());
+app.use(bodyParser.json());
 
 // Utility function to read the seat map from a file
-function readSeatMap() {
+async function readSeatMap() {
   try {
-    if (fs.existsSync(SEAT_FILE_PATH)) {
-      const data = fs.readFileSync(SEAT_FILE_PATH, 'utf-8');
-      if (data.trim() === '') {
-        // If the file is empty, return the default seat map
-        return Array(10).fill(null).map(() => Array(10).fill(null));
+    // Lấy dữ liệu từ cơ sở dữ liệu bằng cách gọi hàm get_full
+    const data = await get_full();
+    // Tạo ma trận 10x10
+    const seatMap = Array(10)
+    .fill(null)
+    .map(() => Array(10).fill(null));
+
+  // Điền dữ liệu từ database vào ma trận
+  // Điền dữ liệu vào seatMap
+  let index = 0;
+  for (let i = 0; i < seatMap.length; i++) {
+    for (let j = 0; j < seatMap[i].length; j++) {
+      if (index < data.length) {
+        const dt_name = data[index].name;
+        const dt_type = data[index].type;
+        seatMap[i][j] = {'name': dt_name, 'type': dt_type};  // Gán giá trị từ result vào seatMap
+        index++;  // Tăng index để điền giá trị tiếp theo
       }
-      return JSON.parse(data); // Try parsing the JSON file
-    } else {
-      // Return default seat map if the file doesn't exist
-      return Array(10).fill(null).map(() => Array(10).fill(null));
     }
+  }
+    return seatMap;  // Chỉ trả về trực tiếp hoặc có thể chuyển đổi tùy thuộc vào cấu trúc dữ liệu
+
   } catch (err) {
-    console.error('Error reading or parsing seat map file:', err);
-    // Return default seat map in case of an error
+    console.error('Error reading or fetching seat map data:', err);
+    // Trả về bản đồ chỗ ngồi mặc định trong trường hợp lỗi
     return Array(10).fill(null).map(() => Array(10).fill(null));
   }
 }
 
-// Utility function to save the seat map to a file
-function saveSeatMap(seatMap) {
-  try {
-    fs.writeFileSync(SEAT_FILE_PATH, JSON.stringify(seatMap, null, 2), 'utf-8');
-  } catch (err) {
-    console.error('Error saving seat map to file:', err);
-  }
-}
 
-// Load the initial seat map from the file
-let seatMap = readSeatMap();
+let seatMap = Array(10)
+.fill(null)
+.map(() => Array(10).fill(null));
 
-app.use('/', express.static(path.join(__dirname, 'public')));
-app.use(cors());
-app.use(bodyParser.json());
-
-// API to get the list of seats
-app.get('/api/seats', (req, res) => {
-  seatMap = readSeatMap(); // Always fetch the current state of seatMap
-  res.json(seatMap);
+// API để lấy danh sách seatmap
+app.get('/api/seats', async (req, res) => {
+    // Lấy dữ liệu từ database
+    const result = await readSeatMap();
+    // console.log(seatMap);
+    seatMap = result;
+    res.json(result);
 });
+
+
 
 // API to mark attendance (reserve a seat)
 app.post('/api/attend', (req, res) => {
@@ -57,7 +177,7 @@ app.post('/api/attend', (req, res) => {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
-        saveSeatMap(seatMap); // Save the updated seat map
+        put_seat(req.body.name, req.body.type);
         return res.json({ success: true, row, col, type: 'occupied' });
       }
     }
@@ -65,19 +185,21 @@ app.post('/api/attend', (req, res) => {
   res.json({ success: false, message: 'No seats available!' });
 });
 
+
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
-        saveSeatMap(seatMap); // Save the updated seat map
+        put_seat(req.body.name, req.body.type);
         return res.json({ success: true, row, col, type: 'decline' });
       }
     }
   }
   res.json({ success: false, message: 'No seats available!' });
 });
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

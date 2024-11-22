@@ -8,6 +8,8 @@ async function loadSeatMap() {
     try {
       const response = await fetch(`${apiUrl}/seats`);
       const seatMap = await response.json();
+      // console.log("Seatmap loaded");
+      console.log(seatMap);
   
       seatMapContainer.innerHTML = ""; // Xóa nội dung cũ
       seatMap.forEach((row, rowIndex) => {
