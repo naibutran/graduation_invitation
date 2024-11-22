@@ -13,13 +13,21 @@ const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct0
 
 // Cấu hình kết nối PostgreSQL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || internal_api,
+  connectionString: process.env.DATABASE_URL || external_api,
   ssl: {
     rejectUnauthorized: false, // Cần thiết cho Render
   },
 });
 
 async function get_full() {
+  // Cấu hình kết nối PostgreSQL
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL || external_api,
+    ssl: {
+      rejectUnauthorized: false, // Cần thiết cho Render
+    },
+  });
+
   try {
     const client = await pool.connect();  // Kết nối với cơ sở dữ liệu
     console.log('Connected to PostgreSQL!');
@@ -34,10 +42,20 @@ async function get_full() {
     return res.rows;
   } catch (err) {
     console.error('Error connecting to the database', err.stack);
+  } finally {
+    pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
   }
 }
 
 function put_seat(name, type){
+  // Cấu hình kết nối PostgreSQL
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL || external_api,
+    ssl: {
+      rejectUnauthorized: false, // Cần thiết cho Render
+    },
+  });
+
   (async () => {
     try {
       // Dữ liệu mẫu để chèn
@@ -55,11 +73,21 @@ function put_seat(name, type){
   
     } catch (err) {
       console.error('Error inserting data:', err);
+    } finally {
+      pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
     }
   })();
 }
 
 function delete_data(){
+  // Cấu hình kết nối PostgreSQL
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL || external_api,
+    ssl: {
+      rejectUnauthorized: false, // Cần thiết cho Render
+    },
+  });
+
   pool.connect()
   .then(() => {
     console.log('Connected to PostgreSQL!');
@@ -74,6 +102,8 @@ function delete_data(){
       
     } catch (err) {
       console.error('Error truncating data:', err);
+    } finally {
+      pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
     }
   })();
 }
