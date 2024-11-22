@@ -10,7 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Dosis:wght@200..800&family=Luxurious+Roman&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/emoji.css@3.0.1@/emoji.min.css" rel="stylesheet"/>
 </head>
 <body>
   <div class="container">
@@ -57,6 +58,18 @@
       <button id="attendButton">Will attend</button>
       <button id="declineButton">Will not attend</button>
     </div>
+
+    <!-- Hộp nhập tên -->
+    <div id="nameInputContainer">
+      <input type="text" id="nameInput" placeholder="Enter your name">
+      <input type="text" id="wishInput" placeholder="(Optional) Leave messeges">
+      <button id="submitNameButton">Submit</button>
+    </div>
+
+    <p class="quote note">
+      Please don't spam. This project is currently not optimized to handle too much.
+    </p>
+
     <div id="seatMap">
       <!-- Sơ đồ ghế ngồi sẽ được cập nhật ở đây -->
     </div>
@@ -75,6 +88,7 @@
 	</script>
 
   </div>
+  <script src="https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

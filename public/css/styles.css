@@ -28,6 +28,11 @@
   font-family: "Didact Gothic", sans-serif;
 }
 
+.note {
+  font-size: 13px;
+  font-weight: bold;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: url("../images/bg1.png");
@@ -89,7 +94,7 @@ button:hover {
   grid-template-columns: repeat(10, 50px);
   gap: 10px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 0px;
   padding: 10px;
   position: relative;
   /* background-color: #f7f7f7; */
@@ -113,6 +118,7 @@ button:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   /* white-space: nowrap; */
+  white-space: 'text-wrap';
   cursor: pointer;
   z-index: 0;
 }
@@ -129,11 +135,14 @@ button:hover {
   font-weight: bold;
   cursor: not-allowed;
   z-index: 2;
+  transition: transform 0.2s ease; /* Thêm hiệu ứng chuyển động khi phóng to */
+  position: relative; /* Để cho phép thêm hiệu ứng mở rộng */
 }
 
 /* Hover: Phóng to ghế */
 #seatMap div.occupied:hover {
   transform: scale(2.5);
+  z-index: 3;
 }
 
 /* Tên rút gọn (2 chữ cuối) */
@@ -151,12 +160,22 @@ button:hover {
   background-color: #46dfb1;
   color: white;
   position: absolute;
-  overflow-x: auto; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
+/* Hiển thị tên đầy đủ khi hover */
 #seatMap div.occupied:hover::after {
   display: block;
+  font-size: 6px;
+  padding: 10px;
   z-index: 9999;
+  text-align: center;
+  white-space: 'text-wrap';
 }
 
 #seatMap div.occupied:hover::before {
@@ -170,11 +189,14 @@ button:hover {
   font-weight: bold;
   cursor: not-allowed;
   z-index: 2;
+  transition: transform 0.2s ease; /* Thêm hiệu ứng chuyển động khi phóng to */
+  position: relative; /* Để cho phép thêm hiệu ứng mở rộng */
 }
 
 /* Hover: Phóng to ghế */
 #seatMap div.decline:hover {
   transform: scale(2.5);
+  z-index: 3; /* Đảm bảo ghế phóng to không bị che khuất */
 }
 
 /* Tên rút gọn (2 chữ cuối) */
@@ -192,11 +214,22 @@ button:hover {
   background-color: #f78c6a;
   color: white;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
+/* Hiển thị tên đầy đủ khi hover */
 #seatMap div.decline:hover::after {
   display: block;
+  font-size: 6px;
+  padding: 10px;
   z-index: 9999;
+  text-align: center;
+  white-space: 'text-wrap';
 }
 
 #seatMap div.decline:hover::before {
@@ -205,8 +238,8 @@ button:hover {
 
 /* Footer */
 footer {
-  margin-top: 20px;
-  margin-bottom: 90px;
+  margin-top: 50px;
+  margin-bottom: 30px;
   padding: 20px;
   /* background-color: #f8f9fa; */
   border-radius: 10px;
@@ -247,3 +280,82 @@ footer {
   text-decoration: underline;
 }
 
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+/* Ẩn các hộp nhập liệu và không chiếm không gian */
+#nameInputContainer {
+  margin-top: 20px;
+  visibility: hidden; /* Không chiếm không gian */
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s 0.5s; /* Đặt độ trễ cho visibility */
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Khi hiển thị hộp nhập liệu */
+#nameInputContainer.show {
+  visibility: visible; /* Hiển thị phần tử */
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Không có độ trễ cho visibility */
+}
+
+#nameInput {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+#wishInput {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+#submitNameButton {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #46f3ed;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#submitNameButton:hover {
+  background-color: #0056b3;
+}
+
+Hiển thị GIF hoặc Video khi người dùng nhấn submit
+#congratulations {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s 0.5s; /* Đặt độ trễ cho visibility */
+  position: fixed; /* Để GIF nằm trên toàn bộ màn hình */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0); /* Đặt vào giữa màn hình */
+  z-index: 9999; /* Đảm bảo GIF luôn nằm trên tất cả các phần tử khác */
+}
+
+#congratulations.show {
+  visibility: visible; /* Hiển thị GIF */
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1); /* Phóng to GIF */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Đảm bảo GIF phóng to mượt mà */
+}
+
+.congratulations-gif {
+  max-width: 300px;
+  max-height: 300px;
+  /* Thêm các thuộc tính để căn chỉnh GIF sao cho hợp lý */
+}
