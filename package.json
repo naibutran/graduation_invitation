@@ -17,5 +17,6 @@
     "pg": "^8.13.1",
     "requestify": "^0.2.5"
   },
+  "devDependencies": {},
   "description": ""
 }
