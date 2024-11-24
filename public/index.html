@@ -14,8 +14,18 @@
   <link href="https://cdn.jsdelivr.net/npm/emoji.css@3.0.1@/emoji.min.css" rel="stylesheet"/>
 </head>
 <body>
+  <div id="table-of-contents" class="toc hide">
+    <h3>Table of Contents</h3>
+    <ul>
+      <li><a href="#flipcard">I. Invitation</a></li>
+      <li><a href="#information">II. Words and Information</a></li>
+      <li><a href="#seatMap">III. Attendance</a></li>
+      <li><a href="#instruction-div">IV. Instruction</a></li>
+    </ul>
+  </div>
+
   <div class="container">
-    <div class="flip-card">
+    <div class="flip-card toc-tag" id="flipcard">
       <div class="flip-card-inner">
         <div class="flip-card-front">
           <img src="images/envelope.png" class="invitation-image" alt="Mặt trước">
@@ -25,12 +35,11 @@
         </div>
       </div>
     </div>
-    <!-- <img src="images/image.png" alt="Thư mời" class="invitation-image"> -->
 
-    <h1 class="title">Graduation Ceremony Invitation</h1>
+    <h1 class="title header">Graduation Ceremony Invitation</h1>
     <span style="text-decoration: underline; white-space: pre;">                                                                                                                                               </span>
 
-    <p class="quote">
+    <p class="quote toc-tag" id="information">
         "A NEW CHAPTER BEGINS" </br></br>
 
         If you receive this invitation, it means that you really are important to me, even if we haven't met for long time. </br></br>
@@ -63,7 +72,6 @@
         </div>
     </footer>
 
-
     <div class="buttons">
       <button id="attendButton">Will attend</button>
       <button id="declineButton">Will not attend</button>
@@ -80,18 +88,89 @@
       Please don't spam. This project is currently not optimized to handle too much.
     </p>
 
-    <div id="seatMap">
+    <div id="seatMap" class="toc-tag">
       <!-- Sơ đồ ghế ngồi sẽ được cập nhật ở đây -->
     </div>
 
+    <div class="instruction-container toggle-container toc-tag" id="instruction-div">
+      <h1 class="title instruction toggle-title">Instruction</h1>
+      <span style="text-decoration: underline; white-space: pre;">                                                                                                                                               </span>
+      <div id="toggle-content" class="close">
+        <div class="instruction-item">
+          <h3>I. Find a way to UIT</h3>
+          <p>You can check the map below</p>
+        </div>
+
+        <div class="google-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d244.8894186539522!2d106.80300952246223!3d10.870050159030232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527587e9ad5bf%3A0xafa66f9c8be3c91!2sUniversity%20of%20Information%20Technology%20-%20VNUHCM!5e0!3m2!1sen!2s!4v1732352938186!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="ggmap"></iframe>
+        </div>
+
+        <div class="instruction-item">
+          <h3>II. Parking </h3>
+          <p>If you arrive by bike, there are two option for parking: </br>
+          1. In UIT's Parking Lot  </br> 
+          2. In VNUHCM Student Culture House (Nhà Văn Hoá Sinh Viên)   </br> </p>
+        </div>
+
+        <!-- The grid: four columns -->
+    <div class="thumbnail">
+      <div class="row">
+        <div class="column">
+          <img src="images/map.png" class="mapmap" alt="UIT Map Instruction" onclick="myFunction(this);">
+        </div>
+        <div class="column">
+          <img src="images/nvhsv1.jpg" alt="Student Culture House" onclick="myFunction(this);">
+        </div>
+        <div class="column">
+          <img src="images/uit.png" alt="UIT (E)" onclick="myFunction(this);">
+        </div>
+        <div class="column">
+          <img src="images/uit_up.jpg" alt="UIT (Upper view)" onclick="myFunction(this);">
+        </div>
+      </div>
+    </div>
+
+    <!-- The expanding image container -->
+    <div class="album-container">
+      <!-- Close the image -->
+      <!-- <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span> -->
+
+      <!-- Expanded image -->
+      <img id="expandedImg">
+
+      <!-- Image text -->
+      <div id="imgtext"></div>
+    </div>
+
+    <div class="instruction-item">
+      <h3>III. Contact to me (or just meet me by surprise!) </h3>
+      <p>You can contact to me by calling my phone number: 0987644923. </br>
+        Or send a messege to me on <a href="https://www.facebook.com/naibu.kut3/" target="_blank">Facebook</a> and <a href="https://www.instagram.com/naibu_tran/" target="_blank">Instagram</a></br> 
+          You could easily find me in the school's yard, it's facing Gate 1 (on the map).
+      </p>
+    </div>
+
+    <div class="instruction-item">
+      <h3>IV. Have a good time!</h3>
+      <p>
+        Hope to see you there at my Graduation Ceremony! </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+      </p>
+  </div>
+
+</div>
+</div>
+
     <script>
 		ScrollReveal().reveal('.invitation-image', { delay: 600, reset: true });
-        ScrollReveal().reveal('.title', { delay: 400, reset: true });
+        ScrollReveal().reveal('.header', { delay: 400, reset: true });
         ScrollReveal().reveal('.quote', { delay: 400, reset: true });
         ScrollReveal().reveal('.footer-container', { delay: 250, reset: true });
         ScrollReveal().reveal('.footer-item', { delay: 250, reset: true });
         ScrollReveal().reveal('.buttons', { delay: 250, reset: true });
-        ScrollReveal().reveal('#seatMap', { delay: 250, reset: true });
+        // ScrollReveal().reveal('.instruction-container', { delay: 250, reset: true });
+        // ScrollReveal().reveal('.instruction-item', { delay: 250, reset: true });
+        // ScrollReveal().reveal('.instruction', { delay: 400, reset: true });
+        // ScrollReveal().reveal('#seatMap', { delay: 250, reset: true });
         // ScrollReveal().reveal('.empty', { delay: 250, reset: true });
         // ScrollReveal().reveal('.occupied', { delay: 250, reset: true });
         // ScrollReveal().reveal('.decline', { delay: 250, reset: true });

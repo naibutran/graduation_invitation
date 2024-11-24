@@ -56,7 +56,82 @@ async function loadSeatMap() {
     }
 }
   
-  
+function remove_class(element, cls){
+  try{
+    element.classList.remove(cls);
+    console.log("remove");
+  }catch (error) {
+    console.error(error);
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function myFunction(imgs) {
+  // Get the expanded image
+  var expandImg = document.getElementById("expandedImg");
+  // Get the image text
+  var imgText = document.getElementById("imgtext");
+
+  // Use the same src in the expanded image as the image being clicked on from the grid
+  expandImg.src = imgs.src;
+  // Use the value of the alt attribute of the clickable image as text inside the expanded image
+  imgText.innerHTML = imgs.alt;
+  expandImg.className = 'fade-in-image';
+  console.log("add");
+  // Show the container element (hidden with CSS)
+  expandImg.parentElement.style.display = "none";
+  sleep(20).then(() => { expandImg.parentElement.style.display = "block"; });
+}
+
+document.querySelectorAll('.toggle-title').forEach(title => {
+  title.addEventListener('click', () => {
+    const content = document.getElementById("toggle-content");
+    if (content.classList.contains('open')) {
+      content.classList.remove('open');
+      content.classList.add('close');
+    } else {
+      content.classList.remove('close');
+      content.classList.add('open');
+    }
+  });
+});
+
+document.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.toc-tag');
+  const tocLinks = document.querySelectorAll('.toc a');
+  const toc = document.getElementById('table-of-contents');
+  const section2 = document.getElementById('information');
+  let currentSection = null;
+  // Kiểm tra vị trí của Section 2
+  const section2Top = section2.getBoundingClientRect().top;
+
+  if (section2Top <= 10) {
+    toc.classList.add('sticky'); // Thêm class 'sticky' khi cuộn qua Section 2
+    toc.classList.remove('hide');
+  } else {
+    toc.classList.remove('sticky');
+    toc.classList.add('hide'); // Gỡ class 'sticky' nếu chưa tới Section 2
+  }
+
+  sections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 100 && rect.bottom > 100) {
+      currentSection = section;
+    }
+  });
+
+  tocLinks.forEach((link) => {
+    link.classList.remove('active');
+    if (currentSection && link.getAttribute('href') === `#${currentSection.id}`) {
+      link.classList.add('active');
+    }
+  });
+});
+
+
 
 // // Gửi tham dự
 // document.getElementById("attendButton").addEventListener("click", async () => {

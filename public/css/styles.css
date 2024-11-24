@@ -1,3 +1,66 @@
+@keyframes fadeIn {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1;}
+  100% { opacity: 0;}
+}
+
+
+.toc {
+  position: absolute; /* Dính vào khi scroll */
+  top: 20%; /* Cách trên 10px */
+  right: 80%;
+  max-width: 80%; /* Giới hạn chiều rộng */
+  padding: 10px;
+  text-align: left;
+  font-family: "Didact Gothic", sans-serif;
+  font-weight: bold;
+  /* mix-blend-mode: multiply; */
+}
+
+.toc.sticky {
+  animation: fadeIn 0.5s forwards ease-in;
+  animation-iteration-count: 1;
+  position: fixed; /* Chỉ trở thành sticky khi đủ điều kiện */
+  /* top: 10px; */
+}
+
+.toc.hide {
+  animation: fadeOut 0.5s forwards ease-in;
+  animation-iteration-count: 1;
+}
+
+.toc h3 {
+  margin-top: 0;
+}
+
+.toc ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.toc ul li {
+  margin: 5px 0;
+}
+
+.toc ul li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.toc ul li a:hover {
+  text-decoration: underline;
+}
+
+.toc ul li a.active {
+  font-weight: bold;
+  color: #ff4500;
+}
+
+
 /* Reset mặc định */
 * {
   margin: 0;
@@ -15,6 +78,10 @@
   font-family: "Playfair Display", serif;
 }
 
+span {
+  overflow: hidden;
+}
+
 /* Trích dẫn */
 .quote {
   font-size: 18px;
@@ -24,7 +91,7 @@
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 70px;
+  margin-top: 40px;
   margin-bottom: 40px;
   font-family: "Didact Gothic", sans-serif;
 }
@@ -63,6 +130,21 @@ body {
   border-radius: 5px;
   margin: 0 auto;
   filter: drop-shadow(6px 5px 20px #888d5d);
+}
+
+/* Hình ảnh thư mời */
+.map-image {
+  max-width: 75%;
+  height: auto;
+  border-radius: 5px;
+  margin: 30px;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0px 0px 10px #888d5d);
+  transition: transform 0.2s ease;
+}
+
+.map-image:hover {
+  transform: scale(1.1);
 }
 
 /* Container chứa thẻ lật */
@@ -133,16 +215,18 @@ button:hover {
  
 /* Sơ đồ ghế ngồi */
 #seatMap {
+  mix-blend-mode: multiply;
   display: grid;
   grid-template-columns: repeat(10, 50px);
   gap: 10px;
   justify-content: center;
   margin-top: 0px;
+  margin-bottom: 100px;
   padding: 10px;
   position: relative;
   /* background-color: #f7f7f7; */
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 5px 10px rgba(164, 164, 19, 0.1); */
 }
 
 /* Ghế ngồi */
@@ -159,7 +243,7 @@ button:hover {
   transition: background-color 0.3s ease, transform 0.2s ease;
   position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis " [..]";;
   /* white-space: nowrap; */
   white-space: 'text-wrap';
   cursor: pointer;
@@ -401,4 +485,189 @@ Hiển thị GIF hoặc Video khi người dùng nhấn submit
   max-width: 300px;
   max-height: 300px;
   /* Thêm các thuộc tính để căn chỉnh GIF sao cho hợp lý */
+}
+
+.ggmap{
+  margin-top: 50px;
+  border-radius: 5px;
+  filter: drop-shadow(6px 5px 20px #888d5d);
+  transition: transform 0.2s ease;
+  mix-blend-mode: multiply;
+}
+
+.ggmap:hover {
+  transform: scale(1.2);
+}
+
+.google-map{
+  margin-bottom: 40px;
+}
+.instruction-item {
+  /* flex: 1; */
+  overflow: hidden;
+}
+
+.instruction-item h3 {
+  overflow: hidden;
+  font-size: 21px;
+  font-family: "Playfair Display", serif;
+  font-weight: bold;
+  color: #4b4949;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.instruction-item p {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Didact Gothic", sans-serif;
+  color: #555;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0px;
+  margin-top: 30px;
+}
+
+/* The grid: Four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 10%;
+  padding: 10px;
+}
+
+#expandedImg{
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0px;
+  margin-bottom: 5px;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0px 5px 14px #888d5d);
+  /* box-shadow: 10px 10px 50px 50px rgb(163, 181, 0) inset; */
+  /* box-shadow: inset 20px 20px rgb(223, 190, 0); */
+}
+
+.mapmap {
+  display: flex;
+  margin-right: auto;
+  height: 60%;
+}
+
+/* Style the images inside the grid */
+.column img {
+  mix-blend-mode: multiply;
+  max-width: 300%;
+  /* height: auto; */
+  opacity: 0.8;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0px 0px 5px #888d5d);
+  /* box-shadow: 0 0 20px 20px rgb(163, 181, 0) inset; */
+  border-radius: 3px;
+  
+}
+
+.column img:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The expanding image container (positioning is needed to position the close button and the text) */
+.album-container {
+  position: relative;
+  display: none;
+}
+
+/* Expanding image text */
+#imgtext {
+  position: flex;
+  /* bottom: 50px;
+  left: 65px; */
+  margin: 0px;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  font-family: "Didact Gothic", sans-serif;
+  /* font-weight: bold; */
+  /* -webkit-text-stroke: 1px #555555; */
+}
+
+/* Closable button inside the image */
+.closebtn {
+  position: flex;
+  /* top: 20px;
+  left: px; */
+  margin: 0px;
+  color: rgb(50, 51, 11);
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.fade-in-image { 
+  animation: fadeIn 0.5s forwards ease-in;
+  animation-iteration-count: 1;
+  }
+
+.fade-out-image {
+  animation: fadeIn 2s ease;
+  animation-iteration-count: initial;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+
+.toggle-container {
+  margin-bottom: 20px;
+}
+
+.toggle-title {
+  cursor: pointer;
+}
+
+.toggle-content {
+  display: flex;
+  margin: 0px;
+  /* max-height: 0; */
+  /* overflow: hidden; */
+  transition: transform 0.3s ease;
+}
+
+.open {
+  animation: scale-up 0.6s forwards ease-in;
+  animation-iteration-count: 1;
+  /* transform: scale(1); */
+  max-height: 100%;
+  /* padding: 10px; */
+  /* transform: scaleY(1); */
+}
+
+.close {
+  animation: scale-down 0.6s forwards ease-in;
+  animation-iteration-count: 1;
+  max-height: 0;
+  /* padding: 10px; */
+}
+
+@keyframes scale-up {
+  0% { transform: scaleY(0); opacity: 0;}
+  100% { transform: scaleY(1); opacity: 1;}
+}
+
+@keyframes scale-down {
+  0% { transform: scaleY(1); opacity: 1;}
+  100% { transform: scaleY(0); opacity: 0;}
 }
