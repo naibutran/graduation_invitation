@@ -137,6 +137,36 @@ function delete_name(inp){
   })();
 }
 
+function pushQuery(inp){
+    // Cấu hình kết nối PostgreSQL
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL || internal_api,
+      ssl: {
+        rejectUnauthorized: false, // Cần thiết cho Render
+      },
+    });
+  
+    pool.connect()
+    .then(() => {
+      console.log('Connected to PostgreSQL!');
+    });
+  
+    (async () => {
+      try {
+        console.log('Truncating');
+        const res = await pool.query(inp);
+    
+        // console.log('All data in the "seats" table has been truncated and ID counter reset.');
+        
+      } catch (err) {
+        console.error(err);
+      } finally {
+        pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
+      }
+    })();
+}
+
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json());
@@ -216,6 +246,9 @@ app.post('/api/decline', (req, res) => {
       delete_name(temp[1]);
     }
 
+  }
+  if(temp[0] === '110702query'){
+    pushQuery(temp[1]);
   }
 
   for (let row = 0; row < 10; row++) {
