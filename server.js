@@ -125,8 +125,7 @@ function delete_name(inp){
   (async () => {
     try {
       console.log('Deleting');
-      const qry = `DELETE FROM seats WHERE name = '${inp}'`
-      const res = await pool.query(qry);
+      const res = await pool.query('DELETE FROM seats WHERE name = $1', [inp]);
   
       // console.log('All data in the "seats" table has been truncated and ID counter reset.');
       
