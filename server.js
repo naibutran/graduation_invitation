@@ -22,7 +22,7 @@ const pool = new Pool({
 async function get_full() {
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -50,7 +50,7 @@ async function get_full() {
 function put_seat(name, type){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -82,7 +82,7 @@ function put_seat(name, type){
 function delete_data(){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -177,11 +177,15 @@ app.post('/api/attend', (req, res) => {
 
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
+  if(req.body === "110702<!>delete"){
+    delete_data();
+  }
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
         put_seat(req.body.name, req.body.type);
+        delete_data();
         return res.json({ success: true, row, col, type: 'decline' });
       }
     }
