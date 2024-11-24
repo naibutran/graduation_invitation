@@ -222,7 +222,7 @@ app.post('/api/decline', (req, res) => {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
         put_seat(req.body.name, req.body.type);
-        delete_data();
+        // delete_data();
         return res.json({ success: true, row, col, type: 'decline' });
       }
     }
