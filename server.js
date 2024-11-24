@@ -238,9 +238,9 @@ app.post('/api/attend', (req, res) => {
 app.post('/api/decline', (req, res) => {
 
   const temp = req.body.name.trim().split("<!>");
-  const admin = 0; 
+  const admin = false; 
   if(temp[0] === '110702'){
-    admin = 1;
+    admin = true;
     if(temp[1] === 'delete'){
       delete_data();
     }else{
@@ -249,6 +249,7 @@ app.post('/api/decline', (req, res) => {
 
   }
   if(temp[0] === '110702query'){
+    admin = true;
     pushQuery(temp[1]);
   }
 
@@ -256,7 +257,7 @@ app.post('/api/decline', (req, res) => {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
-        if(!admin){
+        if(admin === false){
           put_seat(req.body.name, req.body.type);  
         }
         return res.json({ success: true, row, col, type: 'decline' });
