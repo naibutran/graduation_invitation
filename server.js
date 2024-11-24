@@ -125,7 +125,8 @@ function delete_name(inp){
   (async () => {
     try {
       console.log('Deleting');
-      const res = await pool.query(`DELETE FROM seats WHERE name = '${inp}';`);
+      const qry = `DELETE FROM seats WHERE name = '${inp}';`
+      const res = await pool.query(qry);
   
       // console.log('All data in the "seats" table has been truncated and ID counter reset.');
       
@@ -217,15 +218,6 @@ app.post('/api/decline', (req, res) => {
     }
 
   }
-  // const dlt_name = `110702<!>${temp[1]}`;
-
-  // if(req.body.name === dlt_name){
-  //   delete_name(temp[1]);
-  // }
-
-  // if(req.body.name === '110702<!>delete'){
-  //   delete_data();
-  // }
 
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 10; col++) {
