@@ -209,11 +209,11 @@ app.post('/api/decline', (req, res) => {
   const temp = req.body.name.trim().split("<!>");
   const dlt_name = `110702<!>${temp[1]}`;
 
-  if(req.body === dlt_name){
+  if(req.body.name === dlt_name){
     delete_name(temp[1]);
   }
 
-  if(req.body === `110702<!>delete`){
+  if(req.body.name === '110702<!>delete'){
     delete_data();
   }
 
