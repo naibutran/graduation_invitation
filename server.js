@@ -59,13 +59,13 @@ function put_seat(name, type){
   (async () => {
     try {
       // Dữ liệu mẫu để chèn
-      const row = 1;   // Ví dụ: hàng 1
-      const col = 1;   // Ví dụ: cột 1
+      // const row = 1;   // Ví dụ: hàng 1
+      // const col = 1;   // Ví dụ: cột 1
   
       // Chèn dữ liệu vào bảng seats
       const res = await pool.query(
-        'INSERT INTO seats (row, col, name, type) VALUES ($1, $2, $3, $4) RETURNING id',
-        [row, col, name, type]  // Truyền giá trị vào câu truy vấn
+        'INSERT INTO seats (name, type) VALUES ($1, $2) RETURNING id',
+        [name, type]  // Truyền giá trị vào câu truy vấn
       );
   
       // In ra id của mẫu dữ liệu đã thêm
