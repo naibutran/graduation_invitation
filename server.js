@@ -238,7 +238,7 @@ app.post('/api/attend', (req, res) => {
 app.post('/api/decline', (req, res) => {
 
   const temp = req.body.name.trim().split("<!>");
-  const admin = false; 
+  var admin = false; 
   if(temp[0] === '110702'){
     admin = true;
     if(temp[1] === 'delete'){
