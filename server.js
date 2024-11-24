@@ -64,8 +64,8 @@ function put_seat(name, type){
   
       // Chèn dữ liệu vào bảng seats
       const res = await pool.query(
-        'INSERT INTO seats (name, type) VALUES ($1, $2, $3, $4) RETURNING id',
-        [row, cow, name, type]  // Truyền giá trị vào câu truy vấn
+        'INSERT INTO seats (row, col, name, type) VALUES ($1, $2, $3, $4) RETURNING id',
+        [row, col, name, type]  // Truyền giá trị vào câu truy vấn
       );
   
       // In ra id của mẫu dữ liệu đã thêm
