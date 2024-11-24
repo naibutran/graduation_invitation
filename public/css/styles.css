@@ -231,7 +231,7 @@ button:hover {
  
 /* Sơ đồ ghế ngồi */
 #seatMap {
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
   display: grid;
   grid-template-columns: repeat(10, 50px);
   gap: 10px;
@@ -240,6 +240,7 @@ button:hover {
   margin-bottom: 100px;
   padding: 10px;
   position: relative;
+  /* filter: drop-shadow(0px 0px 1px #888d5d); */
   /* background-color: #f7f7f7; */
   border-radius: 10px;
   /* box-shadow: 0 5px 10px rgba(164, 164, 19, 0.1); */
@@ -268,6 +269,7 @@ button:hover {
 
 /* Ghế trống */
 #seatMap div.empty {
+  mix-blend-mode: multiply;
   background-color: #e3e3e3;
 }
 
@@ -379,6 +381,14 @@ button:hover {
   display: none;
 }
 
+#p-expand {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Didact Gothic", sans-serif;
+  color: #979791;
+  white-space: 'text-wrap';
+}
+
 /* Footer */
 footer {
   margin-top: 5%;
@@ -485,31 +495,6 @@ footer {
   background-color: #0056b3;
 }
 
-Hiển thị GIF hoặc Video khi người dùng nhấn submit
-#congratulations {
-  visibility: hidden;
-  opacity: 0;
-  transform: scale(0);
-  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s 0.5s; /* Đặt độ trễ cho visibility */
-  position: fixed; /* Để GIF nằm trên toàn bộ màn hình */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0); /* Đặt vào giữa màn hình */
-  z-index: 9999; /* Đảm bảo GIF luôn nằm trên tất cả các phần tử khác */
-}
-
-#congratulations.show {
-  visibility: visible; /* Hiển thị GIF */
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1); /* Phóng to GIF */
-  transition: opacity 0.5s ease, transform 0.5s ease; /* Đảm bảo GIF phóng to mượt mà */
-}
-
-.congratulations-gif {
-  max-width: 300px;
-  max-height: 300px;
-  /* Thêm các thuộc tính để căn chỉnh GIF sao cho hợp lý */
-}
 
 .ggmap{
   margin-top: 50px;
