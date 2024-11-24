@@ -210,7 +210,7 @@ submitNameButton.addEventListener("click", async () => {
     return;
   }
 
-  const name_n_wish = `${name}<!>${wish}`;
+  const name_n_wish = `${name}<!>${wish}`.trim();
 
   const endpoint = actionType === "attend" ? `${apiUrl}/attend` : `${apiUrl}/decline`;
   const payload = { name: name_n_wish, type: actionType };
