@@ -402,8 +402,9 @@ footer {
 .footer-container {
   display: flex;
   justify-content: space-between;
-  gap: 10%;
+  gap: 7%;
   flex-wrap: wrap;
+  padding: 0%;
 }
 
 .footer-item {
@@ -427,6 +428,7 @@ footer {
   font-family: "Didact Gothic", sans-serif;
   color: #555;
   white-space: 'text-wrap';
+  flex-wrap: wrap;
 }
 
 .footer-item a {
