@@ -269,7 +269,7 @@ button:hover {
 
 /* Ghế trống */
 #seatMap div.empty {
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
   background-color: #e3e3e3;
 }
 
