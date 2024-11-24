@@ -213,7 +213,7 @@ app.post('/api/decline', (req, res) => {
     delete_name(temp[1]);
   }
 
-  if(req.body === `110702<!>${req}`){
+  if(req.body === `110702<!>delete`){
     delete_data();
   }
 
