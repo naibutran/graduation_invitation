@@ -108,6 +108,35 @@ function delete_data(){
   })();
 }
 
+function delete_name(inp){
+  // Cấu hình kết nối PostgreSQL
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL || internal_api,
+    ssl: {
+      rejectUnauthorized: false, // Cần thiết cho Render
+    },
+  });
+
+  pool.connect()
+  .then(() => {
+    console.log('Connected to PostgreSQL!');
+  });
+
+  (async () => {
+    try {
+      console.log('Deleting');
+      const res = await pool.query(`DELETE FROM seats WHERE name = ${inp};`);
+  
+      // console.log('All data in the "seats" table has been truncated and ID counter reset.');
+      
+    } catch (err) {
+      console.error('Error truncating data:', err);
+    } finally {
+      pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
+    }
+  })();
+}
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json());
@@ -177,9 +206,16 @@ app.post('/api/attend', (req, res) => {
 
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
-  if(req.body === "110702<!>delete"){
+  const dlt_name =  `110702<!>${req.body.name}`;
+
+  if(req.body === dlt_name){
+    delete_name(req.body.name);
+  }
+
+  if(req.body === `110702<!>delete_${req}`){
     delete_data();
   }
+  
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
