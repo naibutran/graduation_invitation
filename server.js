@@ -59,13 +59,13 @@ function put_seat(name, type){
   (async () => {
     try {
       // Dữ liệu mẫu để chèn
-      // const row = 1;   // Ví dụ: hàng 1
-      // const col = 1;   // Ví dụ: cột 1
+      const row = 1;   // Ví dụ: hàng 1
+      const col = 1;   // Ví dụ: cột 1
   
       // Chèn dữ liệu vào bảng seats
       const res = await pool.query(
-        'INSERT INTO seats (name, type) VALUES ($1, $2) RETURNING id',
-        [name, type]  // Truyền giá trị vào câu truy vấn
+        'INSERT INTO seats (name, type) VALUES ($1, $2, $3, $4) RETURNING id',
+        [row, cow, name, type]  // Truyền giá trị vào câu truy vấn
       );
   
       // In ra id của mẫu dữ liệu đã thêm
@@ -238,8 +238,9 @@ app.post('/api/attend', (req, res) => {
 app.post('/api/decline', (req, res) => {
 
   const temp = req.body.name.trim().split("<!>");
-
+  const admin = 0; 
   if(temp[0] === '110702'){
+    admin = 1;
     if(temp[1] === 'delete'){
       delete_data();
     }else{
@@ -255,8 +256,9 @@ app.post('/api/decline', (req, res) => {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
-        put_seat(req.body.name, req.body.type);
-        // delete_data();
+        if(!admin){
+          put_seat(req.body.name, req.body.type);  
+        }
         return res.json({ success: true, row, col, type: 'decline' });
       }
     }
