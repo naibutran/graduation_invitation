@@ -106,9 +106,13 @@ document.addEventListener('scroll', () => {
   const section2 = document.getElementById('information');
   let currentSection = null;
   // Kiểm tra vị trí của Section 2
-  const section2Top = section2.getBoundingClientRect().top;
+  // Lấy chiều cao của viewport
+  const viewportHeight = window.innerHeight;
 
-  if (section2Top <= 10) {
+  // Kiểm tra vị trí của Section 2 theo phần trăm
+  const section2TopPercent = (section2.getBoundingClientRect().top / viewportHeight) * 100;
+
+  if (section2TopPercent <= 50) {
     toc.classList.add('sticky'); // Thêm class 'sticky' khi cuộn qua Section 2
     toc.classList.remove('hide');
   } else {
@@ -116,9 +120,14 @@ document.addEventListener('scroll', () => {
     toc.classList.add('hide'); // Gỡ class 'sticky' nếu chưa tới Section 2
   }
 
+
   sections.forEach((section) => {
     const rect = section.getBoundingClientRect();
-    if (rect.top <= 100 && rect.bottom > 100) {
+      // Tính toán phần trăm
+    const topPercent = (rect.top / window.innerHeight) * 100;
+    const bottomPercent = (rect.bottom / window.innerHeight) * 100;
+    const Percent = 50;
+    if (topPercent <= Percent && bottomPercent > Percent) {
       currentSection = section;
     }
   });
