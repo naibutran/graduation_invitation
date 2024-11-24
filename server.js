@@ -207,7 +207,7 @@ app.post('/api/attend', (req, res) => {
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
   const temp = req.body.name.trim().split("<!>");
-  const dlt_name = `110702<!>${temp[0]}`;
+  const dlt_name = `110702<!>${temp[1]}`;
 
   if(req.body === dlt_name){
     delete_name(temp[1]);
