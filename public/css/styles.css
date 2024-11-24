@@ -11,14 +11,19 @@
 
 .toc {
   position: absolute; /* Dính vào khi scroll */
-  top: 20%; /* Cách trên 10px */
-  right: 80%;
-  max-width: 80%; /* Giới hạn chiều rộng */
+  bottom: 3%; /*Cách trên 10px */
+  /* right: 50%; */
+  max-width: 70%; /* Giới hạn chiều rộng */
   padding: 10px;
-  text-align: left;
+  text-align: center;
   font-family: "Didact Gothic", sans-serif;
   font-weight: bold;
+  background-color: #fbf7cc;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   /* mix-blend-mode: multiply; */
+  z-index: 999;
 }
 
 .toc.sticky {
@@ -33,23 +38,30 @@
   animation-iteration-count: 1;
 }
 
-.toc h3 {
+.toc h3 { 
   margin-top: 0;
 }
 
 .toc ul {
-  list-style-type: none;
-  padding: 0;
+  display: flex; /* Đảm bảo các phần tử trong ul hiển thị theo hàng ngang */
+  list-style: none; /* Loại bỏ bullet points */
+  padding: 0; /* Xóa padding */
+  margin: 0; /* Xóa margin nếu cần */
 }
 
 .toc ul li {
-  margin: 5px 0;
+  margin: 0 15px; /* Thêm khoảng cách ngang giữa các mục */
 }
 
 .toc ul li a {
-  text-decoration: none;
-  color: #007bff;
+  text-decoration: none; /* Loại bỏ gạch dưới */
+  color: #9bcbfd; /* Màu chữ (xanh dương) */
 }
+
+.toc ul li a:hover {
+  text-decoration: underline; /* Gạch dưới khi hover */
+}
+
 
 .toc ul li a:hover {
   text-decoration: underline;
@@ -107,9 +119,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   flex-direction: column;
   text-align: center;
+  /* background-repeat: repeat; */
+  /* background-position: top center; */
+  /* height: calc(100% + 1px) !important; */
+  border-top: 0px;
 }
 
 /* Container chính */
@@ -365,9 +381,9 @@ button:hover {
 
 /* Footer */
 footer {
-  margin-top: 50px;
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  /* padding: 10%; */
   /* background-color: #f8f9fa; */
   border-radius: 10px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
@@ -376,11 +392,14 @@ footer {
 .footer-container {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 10%;
+  flex-wrap: wrap;
 }
 
 .footer-item {
   flex: 1;
+  flex-grow: 1;
+  flex-wrap: wrap;
 }
 
 .footer-item h3 {
@@ -389,6 +408,7 @@ footer {
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
+  white-space: 'text-wrap';
 }
 
 .footer-item p {
@@ -396,16 +416,20 @@ footer {
   font-weight: bold;
   font-family: "Didact Gothic", sans-serif;
   color: #555;
+  white-space: 'text-wrap';
 }
 
 .footer-item a {
   color: #007bff;
+  font-size: 15px;
   text-decoration: none;
+  white-space: 'text-wrap';
+  flex-wrap: wrap;
 }
 
-.footer-item a:hover {
+/* .footer-item a:hover {
   text-decoration: underline;
-}
+} */
 
 .hidden {
   display: none;
