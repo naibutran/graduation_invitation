@@ -187,8 +187,8 @@ async function readSeatMap() {
   for (let i = 0; i < seatMap.length; i++) {
     for (let j = 0; j < seatMap[i].length; j++) {
       if (index < data.length) {
-        // const dt_name = data[index].name;
-        const dt_name = data[index].id;
+        const dt_name = data[index].name;
+        // const dt_name = data[index].id;
         const dt_type = data[index].type;
         seatMap[i][j] = {'name': dt_name, 'type': dt_type};  // Gán giá trị từ result vào seatMap
         index++;  // Tăng index để điền giá trị tiếp theo
