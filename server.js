@@ -22,7 +22,7 @@ const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct0
 async function get_full() {
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || internal_api,
+    connectionString: process.env.DATABASE_URL || external_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -50,7 +50,7 @@ async function get_full() {
 function put_seat(name, type){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || internal_api,
+    connectionString: process.env.DATABASE_URL || external_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -82,7 +82,7 @@ function put_seat(name, type){
 function delete_data(){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || internal_api,
+    connectionString: process.env.DATABASE_URL || external_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -111,7 +111,7 @@ function delete_data(){
 function delete_name(inp){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || internal_api,
+    connectionString: process.env.DATABASE_URL || external_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -140,7 +140,7 @@ function delete_name(inp){
 function pushQuery(inp){
     // Cấu hình kết nối PostgreSQL
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL || internal_api,
+      connectionString: process.env.DATABASE_URL || external_api,
       ssl: {
         rejectUnauthorized: false, // Cần thiết cho Render
       },
