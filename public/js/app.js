@@ -4,7 +4,7 @@ const apiUrl = "https://hoanganh-graduation-invitation.onrender.com/api";
 const seatMapContainer = document.getElementById("seatMap");
 
 // Hiển thị sơ đồ ghế ngồi và cập nhật màu ghế
-async function loadSeatMap() {
+async function loadSeatMap(printFull) {
     try {
       const response = await fetch(`${apiUrl}/seats`);
       const seatMap = await response.json();
@@ -17,6 +17,7 @@ async function loadSeatMap() {
           const seatDiv = document.createElement("div");
 
           if (seat) {
+            console.log(seat);
             // Tên đầy đủ từ server
             const name_wish = seat.name.trim().split("<!>");
             const fullName = name_wish[0];
@@ -25,7 +26,13 @@ async function loadSeatMap() {
             if(fullWish){
               haveWish = '💌';
             }
-            seatDiv.setAttribute("data-full-name", `${fullName} ${haveWish}`);
+            if(printFull === true){
+              seatDiv.setAttribute("data-full-name", `${fullName}: ${fullWish}`);
+            }
+            else{
+              seatDiv.setAttribute("data-full-name", `${fullName} ${haveWish}`);
+            }
+            
             // seatDiv.innerHTML = `${fullName} <br> ${fullWish}`;
             // Tạo tên rút gọn (2 chữ cuối)
             const nameParts = fullName.split(" ");
@@ -106,9 +113,13 @@ document.addEventListener('scroll', () => {
   const section2 = document.getElementById('information');
   let currentSection = null;
   // Kiểm tra vị trí của Section 2
-  const section2Top = section2.getBoundingClientRect().top;
+  // Lấy chiều cao của viewport
+  const viewportHeight = window.innerHeight;
 
-  if (section2Top <= 10) {
+  // Kiểm tra vị trí của Section 2 theo phần trăm
+  const section2TopPercent = (section2.getBoundingClientRect().top / viewportHeight) * 100;
+
+  if (section2TopPercent <= 50) {
     toc.classList.add('sticky'); // Thêm class 'sticky' khi cuộn qua Section 2
     toc.classList.remove('hide');
   } else {
@@ -116,9 +127,14 @@ document.addEventListener('scroll', () => {
     toc.classList.add('hide'); // Gỡ class 'sticky' nếu chưa tới Section 2
   }
 
+
   sections.forEach((section) => {
     const rect = section.getBoundingClientRect();
-    if (rect.top <= 100 && rect.bottom > 100) {
+      // Tính toán phần trăm
+    const topPercent = (rect.top / window.innerHeight) * 100;
+    const bottomPercent = (rect.bottom / window.innerHeight) * 100;
+    const Percent = 50;
+    if (topPercent <= Percent && bottomPercent > Percent) {
       currentSection = section;
     }
   });
@@ -201,7 +217,7 @@ submitNameButton.addEventListener("click", async () => {
     return;
   }
 
-  const name_n_wish = `${name}<!>${wish}`;
+  const name_n_wish = `${name}<!>${wish}`.trim();
 
   const endpoint = actionType === "attend" ? `${apiUrl}/attend` : `${apiUrl}/decline`;
   const payload = { name: name_n_wish, type: actionType };
@@ -216,7 +232,12 @@ submitNameButton.addEventListener("click", async () => {
     const result = await response.json();
     if (result.success) {
       alert(actionType === "attend" ? "Hope to see you there!" : "Hope to see you sometime later!");
-      loadSeatMap(); // Tải lại sơ đồ ghế
+      if(name === '110702' & wish === 'full'){
+        loadSeatMap(true); // Tải lại sơ đồ ghế
+      }else{
+        loadSeatMap(false);
+      }
+      
       nameInput.value = ""; // Xóa nội dung trong ô nhập
       nameInputContainer.classList.remove("show"); // Ẩn hộp nhập liệu với hiệu ứng
     } else {

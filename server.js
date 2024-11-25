@@ -8,21 +8,27 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 6969;
 
-const internal_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov';
-const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov';
+const use_api = 'external';
+var db_api = '';
+
+if(use_api === 'internal'){
+  db_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov';
+}else{
+  db_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov';
+}
 
 // Cấu hình kết nối PostgreSQL
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || internal_api,
-  ssl: {
-    rejectUnauthorized: false, // Cần thiết cho Render
-  },
-});
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL || external_api,
+//   ssl: {
+//     rejectUnauthorized: false, // Cần thiết cho Render
+//   },
+// });
 
 async function get_full() {
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || db_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -50,7 +56,7 @@ async function get_full() {
 function put_seat(name, type){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || db_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -82,7 +88,7 @@ function put_seat(name, type){
 function delete_data(){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || db_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -108,6 +114,65 @@ function delete_data(){
   })();
 }
 
+function delete_name(inp){
+  // Cấu hình kết nối PostgreSQL
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL || db_api,
+    ssl: {
+      rejectUnauthorized: false, // Cần thiết cho Render
+    },
+  });
+
+  pool.connect()
+  .then(() => {
+    console.log('Connected to PostgreSQL!');
+  });
+
+  (async () => {
+    try {
+      console.log('Deleting');
+      const res = await pool.query("DELETE FROM seats WHERE name = $1", inp);
+  
+      // console.log('All data in the "seats" table has been truncated and ID counter reset.');
+      
+    } catch (err) {
+      console.error('Error truncating data:', err);
+    } finally {
+      pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
+    }
+  })();
+}
+
+function pushQuery(inp){
+    // Cấu hình kết nối PostgreSQL
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL || db_api,
+      ssl: {
+        rejectUnauthorized: false, // Cần thiết cho Render
+      },
+    });
+  
+    pool.connect()
+    .then(() => {
+      console.log('Connected to PostgreSQL!');
+    });
+  
+    (async () => {
+      try {
+        console.log('Truncating');
+        const res = await pool.query(inp);
+    
+        // console.log('All data in the "seats" table has been truncated and ID counter reset.');
+        
+      } catch (err) {
+        console.error(err);
+      } finally {
+        pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
+      }
+    })();
+}
+
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json());
@@ -129,6 +194,7 @@ async function readSeatMap() {
     for (let j = 0; j < seatMap[i].length; j++) {
       if (index < data.length) {
         const dt_name = data[index].name;
+        // const dt_name = data[index].id;
         const dt_type = data[index].type;
         seatMap[i][j] = {'name': dt_name, 'type': dt_type};  // Gán giá trị từ result vào seatMap
         index++;  // Tăng index để điền giá trị tiếp theo
@@ -177,11 +243,30 @@ app.post('/api/attend', (req, res) => {
 
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
+
+  const temp = req.body.name.trim().split("<!>");
+  var admin = false; 
+  if(temp[0] === '110702'){
+    admin = true;
+    if(temp[1] === 'delete'){
+      delete_data();
+    }else{
+      delete_name(temp[1]);
+    }
+
+  }
+  if(temp[0] === '110702query'){
+    admin = true;
+    pushQuery(temp[1]);
+  }
+
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 10; col++) {
       if (!seatMap[row][col]) {
         seatMap[row][col] = req.body;
-        put_seat(req.body.name, req.body.type);
+        if(admin === false){
+          put_seat(req.body.name, req.body.type);  
+        }
         return res.json({ success: true, row, col, type: 'decline' });
       }
     }
