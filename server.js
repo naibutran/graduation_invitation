@@ -11,13 +11,13 @@ const port = process.env.PORT || 6969;
 const internal_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov';
 const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov';
 
-// Cấu hình kết nối PostgreSQL
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || internal_api,
-  ssl: {
-    rejectUnauthorized: false, // Cần thiết cho Render
-  },
-});
+// // Cấu hình kết nối PostgreSQL
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL || external_api,
+//   ssl: {
+//     rejectUnauthorized: false, // Cần thiết cho Render
+//   },
+// });
 
 async function get_full() {
   // Cấu hình kết nối PostgreSQL
@@ -187,7 +187,8 @@ async function readSeatMap() {
   for (let i = 0; i < seatMap.length; i++) {
     for (let j = 0; j < seatMap[i].length; j++) {
       if (index < data.length) {
-        const dt_name = data[index].name;
+        // const dt_name = data[index].name;
+        const dt_name = data[index].id;
         const dt_type = data[index].type;
         seatMap[i][j] = {'name': dt_name, 'type': dt_type};  // Gán giá trị từ result vào seatMap
         index++;  // Tăng index để điền giá trị tiếp theo
@@ -237,7 +238,7 @@ app.post('/api/attend', (req, res) => {
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
 
-  const temp = req.body.name.trim().split("<!>");
+  const temp = req.body.name.trim().split("_SEP_");
   var admin = false; 
   if(temp[0] === '110702'){
     admin = true;
