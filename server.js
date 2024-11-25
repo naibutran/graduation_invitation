@@ -11,18 +11,18 @@ const port = process.env.PORT || 6969;
 const internal_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov';
 const external_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov';
 
-// Cấu hình kết nối PostgreSQL
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || external_api,
-  ssl: {
-    rejectUnauthorized: false, // Cần thiết cho Render
-  },
-});
+// // Cấu hình kết nối PostgreSQL
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL || external_api,
+//   ssl: {
+//     rejectUnauthorized: false, // Cần thiết cho Render
+//   },
+// });
 
 async function get_full() {
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -50,7 +50,7 @@ async function get_full() {
 function put_seat(name, type){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -82,7 +82,7 @@ function put_seat(name, type){
 function delete_data(){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -111,7 +111,7 @@ function delete_data(){
 function delete_name(inp){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || external_api,
+    connectionString: process.env.DATABASE_URL || internal_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -140,7 +140,7 @@ function delete_name(inp){
 function pushQuery(inp){
     // Cấu hình kết nối PostgreSQL
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL || external_api,
+      connectionString: process.env.DATABASE_URL || internal_api,
       ssl: {
         rejectUnauthorized: false, // Cần thiết cho Render
       },
@@ -238,7 +238,7 @@ app.post('/api/attend', (req, res) => {
 // API to mark decline (indicating a seat is not attended)
 app.post('/api/decline', (req, res) => {
 
-  const temp = req.body.name.trim().split("_SEP_");
+  const temp = req.body.name.trim().split("<!>");
   var admin = false; 
   if(temp[0] === '110702'){
     admin = true;
