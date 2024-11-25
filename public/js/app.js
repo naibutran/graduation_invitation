@@ -25,8 +25,8 @@ async function loadSeatMap() {
             if(fullWish){
               haveWish = '💌';
             }
-            // seatDiv.setAttribute("data-full-name", `${fullName} ${haveWish}`);
-            seatDiv.innerHTML = `${fullName} <br> ${fullWish}`;
+            seatDiv.setAttribute("data-full-name", `${fullName} ${haveWish}`);
+            // seatDiv.innerHTML = `${fullName} <br> ${fullWish}`;
             // Tạo tên rút gọn (2 chữ cuối)
             const nameParts = fullName.split(" ");
             const shortName = nameParts.slice(-2).join(" "); // Lấy 2 từ cuối cùng
