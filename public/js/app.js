@@ -148,47 +148,6 @@ document.addEventListener('scroll', () => {
 });
 
 
-
-// // Gửi tham dự
-// document.getElementById("attendButton").addEventListener("click", async () => {
-//   const name = prompt("Enter your name:");
-//   if (!name) return;
-
-//   const response = await fetch(`${apiUrl}/attend`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ name , type: 'occupied'}),
-//   });
-
-//   const result = await response.json();
-//   if (result.success) {
-//     alert(`Hope to see you there!`);
-//     loadSeatMap();
-//   } else {
-//     alert(result.message);
-//   }
-// });
-
-// // Không tham dự nhưng vẫn đặt ghế (chỉ thay đổi màu)
-// document.getElementById("declineButton").addEventListener("click", async () => {
-//     const name = prompt("Enter your name:");
-//     if (!name) return;
-
-//     const response = await fetch(`${apiUrl}/decline`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ name , type: 'decline'}),
-//     });
-  
-//     const result = await response.json();
-//     if (result.success) {
-//       alert("Hope to see you sometime later!");
-//       loadSeatMap(); // Tải lại sơ đồ ghế để cập nhật màu
-//     } else {
-//       alert(result.message);
-//     }
-//   });
-
 const nameInputContainer = document.getElementById("nameInputContainer");
 const nameInput = document.getElementById("nameInput");
 const wishInput = document.getElementById("wishInput");

@@ -18,17 +18,17 @@ if(use_api === 'internal'){
 }
 
 // Cấu hình kết nối PostgreSQL
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL || external_api,
-//   ssl: {
-//     rejectUnauthorized: false, // Cần thiết cho Render
-//   },
-// });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || use_api,
+  ssl: {
+    rejectUnauthorized: false, // Cần thiết cho Render
+  },
+});
 
 async function get_full() {
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || db_api,
+    connectionString: process.env.DATABASE_URL || use_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -56,7 +56,7 @@ async function get_full() {
 function put_seat(name, type){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || db_api,
+    connectionString: process.env.DATABASE_URL || use_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -88,7 +88,7 @@ function put_seat(name, type){
 function delete_data(){
   // Cấu hình kết nối PostgreSQL
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || db_api,
+    connectionString: process.env.DATABASE_URL || use_api,
     ssl: {
       rejectUnauthorized: false, // Cần thiết cho Render
     },
@@ -113,65 +113,6 @@ function delete_data(){
     }
   })();
 }
-
-function delete_name(inp){
-  // Cấu hình kết nối PostgreSQL
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || db_api,
-    ssl: {
-      rejectUnauthorized: false, // Cần thiết cho Render
-    },
-  });
-
-  pool.connect()
-  .then(() => {
-    console.log('Connected to PostgreSQL!');
-  });
-
-  (async () => {
-    try {
-      console.log('Deleting');
-      const res = await pool.query("DELETE FROM seats WHERE name = $1", inp);
-  
-      // console.log('All data in the "seats" table has been truncated and ID counter reset.');
-      
-    } catch (err) {
-      console.error('Error truncating data:', err);
-    } finally {
-      pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
-    }
-  })();
-}
-
-function pushQuery(inp){
-    // Cấu hình kết nối PostgreSQL
-    const pool = new Pool({
-      connectionString: process.env.DATABASE_URL || db_api,
-      ssl: {
-        rejectUnauthorized: false, // Cần thiết cho Render
-      },
-    });
-  
-    pool.connect()
-    .then(() => {
-      console.log('Connected to PostgreSQL!');
-    });
-  
-    (async () => {
-      try {
-        console.log('Truncating');
-        const res = await pool.query(inp);
-    
-        // console.log('All data in the "seats" table has been truncated and ID counter reset.');
-        
-      } catch (err) {
-        console.error(err);
-      } finally {
-        pool.end();  // Đảm bảo đóng kết nối khi hoàn thành
-      }
-    })();
-}
-
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(cors());
