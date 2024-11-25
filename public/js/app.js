@@ -17,7 +17,7 @@ async function loadSeatMap(printFull) {
           const seatDiv = document.createElement("div");
 
           if (seat) {
-            console.log(seat);
+            // console.log(seat);
             // Tên đầy đủ từ server
             const name_wish = seat.name.trim().split("<!>");
             const fullName = name_wish[0];
