@@ -8,7 +8,7 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 6969;
 
-const use_api = 'external';
+const use_api = 'internal';
 var db_api = '';
 
 if(use_api === 'internal'){
@@ -191,8 +191,9 @@ app.post('/api/decline', (req, res) => {
     admin = true;
     if(temp[1] === 'delete'){
       delete_data();
-    }else{
-      delete_name(temp[1]);
+    }
+    if(temp[1]  === 'full'){
+      get_full();
     }
 
   }
