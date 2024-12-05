@@ -4,17 +4,17 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
-
+const config = require('./config.json');
 const app = express();
-const port = process.env.PORT || 6969;
+const port = process.env.PORT || config.render.port;
 
-const use_api = 'internal';
+const use_api = config.db.api_use;
 var db_api = '';
 
 if(use_api === 'internal'){
-  db_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov';
+  db_api = config.db.internal_api;
 }else{
-  db_api = 'postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov';
+  db_api = config.db.external_api;
 }
 
 // Cấu hình kết nối PostgreSQL
@@ -246,16 +246,18 @@ app.post('/api/decline', (req, res) => {
 
   const temp = req.body.name.trim().split("<!>");
   var admin = false; 
-  if(temp[0] === '110702'){
+  if(temp[0] === config.admin.password){
     admin = true;
     if(temp[1] === 'delete'){
       delete_data();
-    }else{
-      delete_name(temp[1]);
     }
-
+    // if(temp[1] === 'getfull'){
+    //   const t = get_full();
+    //   console.log(t);
+    // }
   }
-  if(temp[0] === '110702query'){
+
+  if(temp[0] === config.admin.query_access){
     admin = true;
     pushQuery(temp[1]);
   }

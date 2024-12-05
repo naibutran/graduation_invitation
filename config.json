@@ -1,0 +1,19 @@
+{
+    "render": {
+      "port": 6969,
+      "local_apiURL":"http://localhost:6969/api",
+      "render_apiURL": "https://hoanganh-graduation-invitation.onrender.com/api"
+    },
+    "db": {
+      "host": "localhost",
+      "port": 6969,
+      "api_use": "external_api",
+      "internal_api":  "postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov",
+      "external_api": "postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov"
+    },
+    "admin": {
+      "password": "110702",
+      "query_access": "110702query"
+    }
+  }
+  
