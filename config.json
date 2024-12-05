@@ -7,7 +7,7 @@
     "db": {
       "host": "localhost",
       "port": 6969,
-      "api_use": "external_api",
+      "api_use": "internal",
       "internal_api":  "postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a/db_ifov",
       "external_api": "postgresql://user:OeRDbfrA0fyslIx62xNYe5iGduzasyUZ@dpg-ct00lhq3esus7384kc0g-a.oregon-postgres.render.com/db_ifov"
     },
